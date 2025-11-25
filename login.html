@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+body{font-family:sans-serif;max-width:400px;margin:50px auto;}
+input,button{width:100%;padding:10px;margin:8px 0;}
+</style>
+</head>
+<body>
+<h2>Login Admin</h2>
+<form id="loginForm">
+<input type="text" id="username" placeholder="Username" required />
+<input type="password" id="password" placeholder="Password" required />
+<button type="submit">Login</button>
+</form>
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e)=>{
+ e.preventDefault();
+ const username=document.getElementById("username").value;
+ const password=document.getElementById("password").value;
+ const res=await fetch("https://YOUR-RAILWAY-URL/login",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({username,password})
+ });
+ const data=await res.json();
+ if(data.token){
+   localStorage.setItem("token",data.token);
+   window.location="upload.html";
+ }else alert("Login gagal");
+});
+</script>
+</body>
+</html>
